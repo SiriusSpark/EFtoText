@@ -1,0 +1,2640 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "文本生成",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "用户管理"
+    },
+    {
+      "name": "事件图管理"
+    },
+    {
+      "name": "事件图节点和关系"
+    },
+    {
+      "name": "文本风格"
+    },
+    {
+      "name": "DeepSeek API"
+    },
+    {
+      "name": "生成文本"
+    }
+  ],
+  "paths": {
+    "/api/users/register": {
+      "post": {
+        "summary": "用户注册",
+        "deprecated": false,
+        "description": "新用户注册，创建账号",
+        "operationId": "register",
+        "tags": [
+          "用户管理"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegisterRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseMapStringObject"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/users/logout": {
+      "post": {
+        "summary": "退出登录",
+        "deprecated": false,
+        "description": "用户退出登录，注销认证令牌",
+        "operationId": "logout",
+        "tags": [
+          "用户管理"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "认证令牌",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseVoid"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/users/{id}": {
+      "put": {
+        "summary": "更新用户信息",
+        "deprecated": false,
+        "description": "更新指定用户的基本信息",
+        "operationId": "updateUser",
+        "tags": [
+          "用户管理"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "用户ID",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseVoid"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "删除用户",
+        "deprecated": false,
+        "description": "删除指定的用户账号",
+        "operationId": "deleteUser",
+        "tags": [
+          "用户管理"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "用户ID",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseVoid"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/users/{id}/last-active": {
+      "put": {
+        "summary": "更新活动时间",
+        "deprecated": false,
+        "description": "更新用户的最后活动时间",
+        "operationId": "updateLastActive",
+        "tags": [
+          "用户管理"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "用户ID",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseVoid"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/users/{id}/password": {
+      "put": {
+        "summary": "修改密码",
+        "deprecated": false,
+        "description": "修改指定用户的登录密码",
+        "operationId": "updatePassword",
+        "tags": [
+          "用户管理"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "用户ID",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasswordUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseVoid"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/users": {
+      "get": {
+        "summary": "获取所有用户",
+        "deprecated": false,
+        "description": "获取系统中所有用户的列表",
+        "operationId": "getAllUsers",
+        "tags": [
+          "用户管理"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDTO"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/users/me": {
+      "get": {
+        "summary": "获取当前用户信息",
+        "deprecated": false,
+        "description": "获取当前登录用户的详细信息",
+        "operationId": "getCurrentUser",
+        "tags": [
+          "用户管理"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseUserDTO"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/users/{id}/avatar": {
+      "put": {
+        "summary": "更新头像",
+        "deprecated": false,
+        "description": "更新用户的头像图片",
+        "operationId": "updateAvatar",
+        "tags": [
+          "用户管理"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "用户ID",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "头像文件",
+                    "format": "binary",
+                    "example": ""
+                  }
+                },
+                "required": [
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseMapStringString"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "get": {
+        "summary": "获取头像",
+        "deprecated": false,
+        "description": "获取用户的头像图片",
+        "operationId": "getAvatar",
+        "tags": [
+          "用户管理"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "用户ID",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseMapStringString"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/users/login": {
+      "post": {
+        "summary": "用户登录",
+        "deprecated": false,
+        "description": "用户登录并获取认证令牌",
+        "operationId": "login",
+        "tags": [
+          "用户管理"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginRequest"
+              },
+              "example": {
+                "username": "testuser3",
+                "password": "12345678"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseMapStringObject"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/event_graphs": {
+      "post": {
+        "summary": "创建事件图",
+        "deprecated": false,
+        "description": "创建一个新的事件图（属于当前登录用户）",
+        "operationId": "createEventGraph",
+        "tags": [
+          "事件图管理"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventGraphRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseEventGraph"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "get": {
+        "summary": "获取当前用户的事件图列表",
+        "deprecated": false,
+        "description": "获取当前登录用户创建的所有事件图",
+        "operationId": "getUserEventGraphs",
+        "tags": [
+          "事件图管理"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseListEventGraph"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/event_graphs/{id}": {
+      "delete": {
+        "summary": "删除事件图",
+        "deprecated": false,
+        "description": "删除一个事件图",
+        "operationId": "deleteEventGraph",
+        "tags": [
+          "事件图管理"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "事件图ID",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseVoid"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "get": {
+        "summary": "获取指定事件图详情",
+        "deprecated": false,
+        "description": "获取某个事件图的详细信息",
+        "operationId": "getEventGraph",
+        "tags": [
+          "事件图管理"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "事件图ID",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseEventGraph"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "更新事件图信息",
+        "deprecated": false,
+        "description": "修改事件图的标题和描述",
+        "operationId": "updateEventGraph",
+        "tags": [
+          "事件图管理"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "事件图ID",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventGraphRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseEventGraph"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/graph/nodes": {
+      "post": {
+        "summary": "创建事件节点",
+        "deprecated": false,
+        "description": "在事件图中创建一个新的事件节点",
+        "operationId": "createNode",
+        "tags": [
+          "事件图节点和关系"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventNodeDTO"
+              },
+              "example": {
+                "eventGraphId": 1,
+                "title": "西晋建立",
+                "description": "266年，司马炎逼迫曹奂禅让，正式建立西晋王朝，结束曹魏政权。",
+                "location": "洛阳",
+                "startTime": "0266-02-04 ",
+                "endTime": "0266-02-04 ",
+                "labels": [
+                  "政权更替",
+                  "西晋",
+                  "司马炎"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseEventNodeDTO"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/graph/nodes/5": {
+      "get": {
+        "summary": "获取事件节点",
+        "deprecated": false,
+        "description": "获取指定ID的事件节点详情",
+        "operationId": "getNode",
+        "tags": [
+          "事件图节点和关系"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseEventNodeDTO"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "更新事件节点",
+        "deprecated": false,
+        "description": "更新指定ID的事件节点信息",
+        "operationId": "updateNode",
+        "tags": [
+          "事件图节点和关系"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventNodeDTO"
+              },
+              "example": {
+                "description": "公元266年，司马炎逼迫曹奂禅让，正式建立西晋王朝，结束曹魏政权"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseEventNodeDTO"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/graph/nodes/2": {
+      "delete": {
+        "summary": "删除事件节点",
+        "deprecated": false,
+        "description": "删除指定ID的事件节点及其相关关系",
+        "operationId": "deleteNode",
+        "tags": [
+          "事件图节点和关系"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseVoid"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/graph/edges": {
+      "post": {
+        "summary": "创建事件关系",
+        "deprecated": false,
+        "description": "在两个事件节点之间创建关系",
+        "operationId": "createRelation",
+        "tags": [
+          "事件图节点和关系"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventRelationDTO"
+              },
+              "example": {
+                "eventGraphId": 1,
+                "sourceId": 0,
+                "targetId": 1,
+                "type": "PRECEDES",
+                "strength": "高"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseEventRelationDTO"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/graph/edges/{id}": {
+      "delete": {
+        "summary": "删除事件关系",
+        "deprecated": false,
+        "description": "删除指定ID的事件关系",
+        "operationId": "deleteRelation",
+        "tags": [
+          "事件图节点和关系"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "关系ID",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseVoid"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "更新事件关系",
+        "deprecated": false,
+        "description": "更新指定ID的事件关系信息",
+        "operationId": "updateRelation",
+        "tags": [
+          "事件图节点和关系"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "关系ID",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventRelationDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseEventRelationDTO"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/graph/edges/1": {
+      "get": {
+        "summary": "获取事件关系",
+        "deprecated": false,
+        "description": "获取指定ID的事件关系详情",
+        "operationId": "getRelation",
+        "tags": [
+          "事件图节点和关系"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseEventRelationDTO"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/graph/{eventGraphId}/data": {
+      "get": {
+        "summary": "获取指定事件图的所有信息",
+        "deprecated": false,
+        "description": "获取指定事件图的所有节点和关系",
+        "operationId": "getEventGraphData",
+        "tags": [
+          "事件图节点和关系"
+        ],
+        "parameters": [
+          {
+            "name": "eventGraphId",
+            "in": "path",
+            "description": "事件图ID",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseEventGraphDataDTO"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/text_styles": {
+      "post": {
+        "summary": "新建自定义风格",
+        "deprecated": false,
+        "description": "创建新的自定义风格",
+        "operationId": "createStyle",
+        "tags": [
+          "文本风格"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TextStyle"
+              },
+              "example": {
+                "name": "日语训读体",
+                "description": "只包含汉字和片假名，形式是诗"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TextStyle"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "get": {
+        "summary": "获取全部风格",
+        "deprecated": false,
+        "description": "获取当前用户所有风格，包括系统预设和用户自定义的风格",
+        "operationId": "getAllStyles",
+        "tags": [
+          "文本风格"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TextStyle"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/text_styles/3": {
+      "get": {
+        "summary": "获取单个风格",
+        "deprecated": false,
+        "description": "获取指定风格的详细信息",
+        "operationId": "getStyleById",
+        "tags": [
+          "文本风格"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TextStyle"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/text_styles/1": {
+      "put": {
+        "summary": "修改自定义风格",
+        "deprecated": false,
+        "description": "修改用户自定义风格的信息",
+        "operationId": "updateStyle",
+        "tags": [
+          "文本风格"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TextStyle"
+              },
+              "example": {
+                "name": "学术",
+                "description": "适用于学术论文的写作风格"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TextStyle"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/text_styles/{id}": {
+      "delete": {
+        "summary": "删除自定义风格",
+        "deprecated": false,
+        "description": "删除用户自定义的风格，无法删除系统预设风格",
+        "operationId": "deleteStyle",
+        "tags": [
+          "文本风格"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "风格ID",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "风格删除成功",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/deepseek/generate": {
+      "post": {
+        "summary": "生成文本",
+        "deprecated": false,
+        "description": "调用 DeepSeek API 生成文本",
+        "operationId": "generateText",
+        "tags": [
+          "DeepSeek API"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenerateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenerateResponse"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/generated_texts": {
+      "post": {
+        "summary": "根据事件图和风格生成文本",
+        "deprecated": false,
+        "description": "通过指定事件图和风格生成新的文本",
+        "operationId": "generateText",
+        "tags": [
+          "生成文本"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenerateTextRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneratedText"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "get": {
+        "summary": "查询指定事件图的所有文本",
+        "deprecated": false,
+        "description": "返回按创建时间降序排序的全部文本",
+        "operationId": "getAllTextsByEventGraphId",
+        "tags": [
+          "生成文本"
+        ],
+        "parameters": [
+          {
+            "name": "eventGraphId",
+            "in": "query",
+            "description": "事件图ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GeneratedText"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/generated_texts/{id}": {
+      "put": {
+        "summary": "编辑文本内容",
+        "deprecated": false,
+        "description": "修改指定ID的文本内容",
+        "operationId": "updateText",
+        "tags": [
+          "生成文本"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "文本ID",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTextRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "删除指定文本",
+        "deprecated": false,
+        "description": "删除某条生成文本（仅限当前用户拥有的）",
+        "operationId": "deleteText",
+        "tags": [
+          "生成文本"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "文本ID",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/generated_texts/latest": {
+      "get": {
+        "summary": "查询指定事件图的最近一条生成文本",
+        "deprecated": false,
+        "description": "获取指定事件图的最新生成文本",
+        "operationId": "getLatestText",
+        "tags": [
+          "生成文本"
+        ],
+        "parameters": [
+          {
+            "name": "eventGraphId",
+            "in": "query",
+            "description": "事件图ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/generated_texts/{id}/export": {
+      "get": {
+        "summary": "导出单个文本",
+        "deprecated": false,
+        "description": "以.txt文件形式导出该文本",
+        "operationId": "exportText",
+        "tags": [
+          "生成文本"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "文本ID",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "byte"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/generated_texts/export": {
+      "get": {
+        "summary": "导出指定事件图的所有文本",
+        "deprecated": false,
+        "description": "将该图下所有文本打包导出为zip文件",
+        "operationId": "exportTextsByEventGraphId",
+        "tags": [
+          "生成文本"
+        ],
+        "parameters": [
+          {
+            "name": "eventGraphId",
+            "in": "query",
+            "description": "事件图ID",
+            "required": true,
+            "example": 1,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "byte"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/generated_texts/export/all": {
+      "get": {
+        "summary": "导出用户的所有文本",
+        "deprecated": false,
+        "description": "将当前用户所有文本统一打包导出为zip文件",
+        "operationId": "exportAllTexts",
+        "tags": [
+          "生成文本"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer {{token2}}",
+            "schema": {
+              "type": "string",
+              "default": "{{token2}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "byte"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Pet": {
+        "required": [
+          "name",
+          "photoUrls",
+          "id",
+          "category",
+          "tags",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1,
+            "description": "宠物ID编号"
+          },
+          "category": {
+            "$ref": "#/components/schemas/Category",
+            "description": "分组"
+          },
+          "name": {
+            "type": "string",
+            "description": "名称",
+            "examples": [
+              "doggie"
+            ]
+          },
+          "photoUrls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "照片URL"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            },
+            "description": "标签"
+          },
+          "status": {
+            "type": "string",
+            "description": "宠物销售状态",
+            "enum": [
+              "available",
+              "pending",
+              "sold"
+            ]
+          }
+        }
+      },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1,
+            "description": "分组ID编号"
+          },
+          "name": {
+            "type": "string",
+            "description": "分组名称"
+          }
+        },
+        "xml": {
+          "name": "Category"
+        }
+      },
+      "Tag": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1,
+            "description": "标签ID编号"
+          },
+          "name": {
+            "type": "string",
+            "description": "标签名称"
+          }
+        },
+        "xml": {
+          "name": "Tag"
+        }
+      },
+      "UserRegisterRequest": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "nickname": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "avatar_url": {
+            "type": "string"
+          }
+        }
+      },
+      "UserLoginRequest": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiResponseVoid": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {}
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "username": {
+            "type": "string"
+          },
+          "nickname": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "avatar_url": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "last_active_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ApiResponseMapStringString": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "properties": {}
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "PasswordUpdateRequest": {
+        "type": "object",
+        "properties": {
+          "old_password": {
+            "type": "string"
+          },
+          "new_password": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiResponseMapStringObject": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object"
+            },
+            "properties": {}
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "EventGraphRequest": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "EventNodeDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "eventGraphId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "labels": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "startTime": {
+            "type": "string"
+          },
+          "endTime": {
+            "type": "string"
+          }
+        }
+      },
+      "TextStyle": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "风格ID",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string",
+            "description": "风格名称",
+            "examples": [
+              "学术"
+            ]
+          },
+          "description": {
+            "type": "string",
+            "description": "风格描述",
+            "examples": [
+              "适用于学术论文的写作风格"
+            ]
+          }
+        },
+        "description": "文本风格"
+      },
+      "EventGraph": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ApiResponseEventGraph": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/EventGraph"
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiResponseEventNodeDTO": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/EventNodeDTO"
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiResponseUser": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/User"
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "EventRelationDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "eventGraphId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sourceId": {
+            "type": "string"
+          },
+          "targetId": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "PRECEDES",
+              "FOLLOWS",
+              "CONCURRENT_WITH",
+              "CAUSES",
+              "RESULTS_IN",
+              "COREFERS_TO",
+              "HAS_SUBEVENT",
+              "SUBEVENT_OF",
+              "SIMILAR_TO"
+            ]
+          },
+          "strength": {
+            "type": "string",
+            "enum": [
+              "低",
+              "中",
+              "高"
+            ]
+          }
+        }
+      },
+      "UserDTO": {
+        "required": [
+          "id",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "username": {
+            "type": "string"
+          },
+          "nickname": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "avatar_url": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "last_active_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ApiResponseEventRelationDTO": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/EventRelationDTO"
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiResponseUserDTO": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/UserDTO"
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateTextRequest": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiResponseListEventGraph": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EventGraph"
+            }
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "GenerateRequest": {
+        "type": "object",
+        "properties": {
+          "systemPrompt": {
+            "type": "string"
+          },
+          "userMessage": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiResponseListEventNodeDTO": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EventNodeDTO"
+            }
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiResponseEventGraphDataDTO": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/EventGraphDataDTO"
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "GenerateResponse": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string"
+          }
+        }
+      },
+      "GenerateTextRequest": {
+        "type": "object",
+        "properties": {
+          "eventGraphId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "styleId": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "ApiResponseListEventRelationDTO": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EventRelationDTO"
+            }
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "EventGraphDataDTO": {
+        "type": "object",
+        "properties": {
+          "eventGraphId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "nodes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EventNodeDTO"
+            }
+          },
+          "edges": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EventRelationDTO"
+            }
+          }
+        }
+      },
+      "GeneratedText": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "文本ID",
+            "format": "int64"
+          },
+          "userId": {
+            "type": "integer",
+            "description": "用户ID",
+            "format": "int64"
+          },
+          "eventGraphId": {
+            "type": "integer",
+            "description": "事件图ID",
+            "format": "int64"
+          },
+          "styleId": {
+            "type": "integer",
+            "description": "风格ID",
+            "format": "int64"
+          },
+          "content": {
+            "type": "string",
+            "description": "文本内容"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "创建时间",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "更新时间",
+            "format": "date-time"
+          }
+        },
+        "description": "生成的文本"
+      },
+      "GeneratedTextResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "eventGraphId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "style": {
+            "$ref": "#/components/schemas/StyleDTO"
+          },
+          "content": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "StyleDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {}
+  },
+  "servers": [],
+  "security": []
+}
